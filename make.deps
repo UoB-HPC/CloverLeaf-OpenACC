@@ -1,0 +1,65 @@
+ext_accelerate.o: ext_accelerate.c ext_chunk.h ftocmacros.h
+ext_advec_cell.o: ext_advec_cell.c ext_chunk.h ftocmacros.h
+ext_advec_mom.o: ext_advec_mom.c ftocmacros.h ext_chunk.h
+ext_calc_dt.o: ext_calc_dt.c ext_chunk.h ftocmacros.h
+ext_chunk.o: ext_chunk.c ext_chunk.h
+ext_field_summary.o: ext_field_summary.c ftocmacros.h ext_chunk.h
+ext_flux_calc.o: ext_flux_calc.c ftocmacros.h ext_chunk.h
+ext_generate_chunk.o: ext_generate_chunk.c ftocmacros.h
+ext_ideal_gas.o: ext_ideal_gas.c ftocmacros.h ext_chunk.h
+ext_initialise_chunk.o: ext_initialise_chunk.c ftocmacros.h
+ext_pack.o: ext_pack.c ftocmacros.h ext_chunk.h
+ext_pdv.o: ext_pdv.c ftocmacros.h ext_chunk.h
+ext_reset_field.o: ext_reset_field.c ftocmacros.h ext_chunk.h
+ext_revert.o: ext_revert.c ftocmacros.h ext_chunk.h
+ext_update_halo.o: ext_update_halo.c ftocmacros.h ext_chunk.h
+ext_viscosity.o: ext_viscosity.c ftocmacros.h ext_chunk.h
+timer_c.o: timer_c.c
+revert_kernel.o : 
+advec_cell_kernel.o : 
+build_field.o : clover.o
+clover.o : data.o pack_kernel.o definitions.o
+reset_field.o :  reset_field_kernel.o clover.o
+PdV_kernel.o : 
+generate_chunk.o :  clover.o generate_chunk_kernel.o
+calc_dt_kernel.o : 
+field_summary_kernel.o : 
+PdV.o :  clover.o PdV_kernel.o ideal_gas.o report.o revert.o update_halo.o
+advec_mom_kernel.o : 
+ideal_gas.o :  ideal_gas_kernel.o clover.o
+ideal_gas_kernel.o : 
+parse.o :  report.o clover.o data.o
+visit.o :  viscosity.o update_halo.o clover.o ideal_gas.o
+viscosity.o :  viscosity_kernel.o clover.o
+timestep.o :  clover.o viscosity.o ideal_gas.o calc_dt.o report.o \
+    update_halo.o definitions.o
+update_tile_halo_kernel.o :  data.o
+accelerate_kernel.o : 
+field_summary.o :  ideal_gas.o clover.o field_summary_kernel.o
+initialise_chunk.o :  initialise_chunk_kernel.o clover.o
+calc_dt.o :  clover.o calc_dt_kernel.o 
+revert.o :  clover.o revert_kernel.o
+advec_cell_driver.o :  advec_cell_kernel.o clover.o
+definitions.o :  data.o
+advection.o :  advec_mom_driver.o update_halo.o advec_cell_driver.o clover.o
+start.o :  ideal_gas.o update_halo.o clover.o parse.o
+generate_chunk_kernel.o : 
+flux_calc.o :  clover.o flux_calc_kernel.o
+flux_calc_kernel.o : 
+hydro.o :  clover.o flux_calc.o accelerate.o viscosity.o reset_field.o \
+	timestep.o advection.o PdV.o
+reset_field_kernel.o : 
+viscosity_kernel.o : 
+update_halo.o :  update_halo_kernel.o clover.o update_tile_halo.o
+initialise_chunk_kernel.o : 
+timer.o : 
+clover_leaf.o :  clover.o 
+advec_mom_driver.o :  advec_mom_kernel.o clover.o 
+update_tile_halo.o :  update_tile_halo_kernel.o clover.o
+update_halo_kernel.o :  data.o
+pack_kernel.o : 
+accelerate.o :  accelerate_kernel.o clover.o
+read_input.o :  clover.o report.o parse.o 
+data.o : 
+initialise.o :  report.o clover.o parse.o
+report.o :  clover.o data.o
