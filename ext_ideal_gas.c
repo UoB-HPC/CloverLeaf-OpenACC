@@ -43,10 +43,10 @@ void ideal_gas_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
 
     START_PROFILING;
 
-#pragma acc kernels loop independent \
-    collapse(2) if(ideal_offload) \
+#pragma acc parallel if(ideal_offload) \
     present(pressure[:_chunk.wid], density[:_chunk.wid],\
             energy[:_chunk.wid], soundspeed[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for
     for (int k = y_min; k <= y_max; k++) 
     {

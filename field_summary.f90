@@ -122,8 +122,6 @@ SUBROUTINE field_summary(offload)
   CALL clover_sum(ie)
   CALL clover_sum(ke)
 
-  WRITE(*,'(e16.12, e16.12, e16.12, e16.12, e16.12)') vol, mass, ke, ie, press
-
 
   IF(profiler_on) profiler%summary=profiler%summary+(timer()-kernel_time)
 

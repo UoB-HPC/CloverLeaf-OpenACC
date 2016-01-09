@@ -50,12 +50,12 @@ void accelerate_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
 
     START_PROFILING;
 
-#pragma acc kernels loop independent \
-    if(offload) collapse(2) \
+#pragma acc parallel if(offload) \
     present(density0[:_chunk.wid], volume[:_chunk.wid], viscosity[:_chunk.wid],\
             xvel1[:_chunk.bwid], yvel1[:_chunk.bwid], pressure[:_chunk.wid],\
             xarea[:_chunk.xwid], xvel0[:_chunk.bwid], yvel0[:_chunk.bwid],\
             yarea[:_chunk.ywid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for
     for (int k = y_min; k <= y_max + 1; k++) 
     {

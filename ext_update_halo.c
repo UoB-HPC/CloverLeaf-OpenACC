@@ -88,9 +88,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_BOTTOM,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_BOTTOM,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(density0[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for
             for (int j = x_min-depth; j <= x_max+depth; j++) 
             {
@@ -106,9 +106,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_TOP,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_TOP,1)]==EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(density0[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for
             for (int j = x_min-depth; j <= x_max+depth; j++) 
             {
@@ -124,9 +124,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_LEFT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_LEFT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(density0[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for
             for (int k = y_min-depth; k <= y_max+depth; k++) 
             {
@@ -142,9 +142,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_RIGHT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_RIGHT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(density0[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for
             for (int k = y_min-depth; k <= y_max+depth; k++) 
             {
@@ -163,9 +163,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_BOTTOM,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_BOTTOM,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(density1[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for
             for (int j = x_min-depth; j <= x_max+depth; j++) 
             {
@@ -181,9 +181,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_TOP,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_TOP,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(density1[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for
             for (int j = x_min-depth; j <= x_max+depth; j++) 
             {
@@ -199,9 +199,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_LEFT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_LEFT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(density1[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 
 //#pragma omp parallel for
             for (int k = y_min-depth; k <= y_max+depth; k++) 
@@ -218,9 +218,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_RIGHT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_RIGHT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(density1[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 
 //#pragma omp parallel for
             for (int k = y_min-depth; k <= y_max+depth; k++) 
@@ -240,9 +240,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_BOTTOM,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_BOTTOM,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(energy0[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 
 //#pragma omp parallel for
             for (int j = x_min-depth; j <= x_max+depth; j++) 
@@ -259,9 +259,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_TOP,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_TOP,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(energy0[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+depth; j++) 
             {
@@ -277,9 +277,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_LEFT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_LEFT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(energy0[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+depth; k++) 
             {
@@ -295,9 +295,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_RIGHT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_RIGHT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(energy0[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+depth; k++) 
             {
@@ -316,9 +316,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_BOTTOM,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_BOTTOM,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(energy1[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+depth; j++) 
             {
@@ -334,9 +334,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_TOP,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_TOP,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(energy1[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for
             for (int j = x_min-depth; j <= x_max+depth; j++) 
             {
@@ -352,9 +352,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_LEFT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_LEFT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(energy1[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for
             for (int k = y_min-depth; k <= y_max+depth; k++) 
             {
@@ -370,9 +370,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_RIGHT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_RIGHT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(energy1[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for
             for (int k = y_min-depth; k <= y_max+depth; k++) 
             {
@@ -391,9 +391,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_BOTTOM,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_BOTTOM,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(pressure[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+depth; j++) 
             {
@@ -409,9 +409,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_TOP,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_TOP,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(pressure[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+depth; j++) 
             {
@@ -427,9 +427,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_LEFT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_LEFT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(pressure[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+depth; k++) 
             {
@@ -445,9 +445,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_RIGHT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_RIGHT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(pressure[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+depth; k++) 
             {
@@ -466,9 +466,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_BOTTOM,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_BOTTOM,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(viscosity[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+depth; j++) 
             {
@@ -484,9 +484,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_TOP,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_TOP,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(viscosity[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+depth; j++) 
             {
@@ -502,9 +502,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_LEFT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_LEFT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(viscosity[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+depth; k++) 
             {
@@ -520,9 +520,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_RIGHT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_RIGHT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(viscosity[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+depth; k++) 
             {
@@ -541,9 +541,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_BOTTOM,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_BOTTOM,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(soundspeed[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+depth; j++) 
             {
@@ -559,9 +559,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_TOP,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_TOP,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(soundspeed[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+depth; j++) 
             {
@@ -577,9 +577,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_LEFT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_LEFT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(soundspeed[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+depth; k++) 
             {
@@ -595,9 +595,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_RIGHT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_RIGHT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(soundspeed[:_chunk.wid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+depth; k++) 
             {
@@ -615,9 +615,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_BOTTOM,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_BOTTOM,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(xvel0[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+1+depth; j++) 
             {
@@ -633,9 +633,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_TOP,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_TOP,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(xvel0[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+1+depth; j++) 
             {
@@ -651,9 +651,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_LEFT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_LEFT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(xvel0[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+1+depth; k++) 
             {
@@ -669,9 +669,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_RIGHT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_RIGHT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(xvel0[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+1+depth; k++) 
             {
@@ -690,9 +690,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_BOTTOM,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_BOTTOM,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(xvel1[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+1+depth; j++) 
             {
@@ -708,9 +708,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_TOP,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_TOP,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(xvel1[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+1+depth; j++) 
             {
@@ -726,9 +726,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_LEFT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_LEFT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(xvel1[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+1+depth; k++) 
             {
@@ -744,9 +744,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_RIGHT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_RIGHT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(xvel1[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+1+depth; k++) 
             {
@@ -765,9 +765,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_BOTTOM,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_BOTTOM,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(yvel0[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+1+depth; j++) 
             {
@@ -783,9 +783,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_TOP,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_TOP,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(yvel0[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+1+depth; j++) 
             {
@@ -801,9 +801,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_LEFT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_LEFT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(yvel0[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+1+depth; k++) 
             {
@@ -819,9 +819,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_RIGHT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_RIGHT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(yvel0[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+1+depth; k++) 
             {
@@ -840,9 +840,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_BOTTOM,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_BOTTOM,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(yvel1[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+1+depth; j++) 
             {
@@ -858,9 +858,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_TOP,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_TOP,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(yvel1[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+1+depth; j++) 
             {
@@ -876,9 +876,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_LEFT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_LEFT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(yvel1[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+1+depth; k++) 
             {
@@ -894,9 +894,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_RIGHT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_RIGHT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(yvel1[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+1+depth; k++) 
             {
@@ -915,9 +915,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_BOTTOM,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_BOTTOM,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(vol_flux_x[:_chunk.xwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+1+depth; j++) 
             {
@@ -933,9 +933,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_TOP,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_TOP,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(vol_flux_x[:_chunk.xwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+1+depth; j++) 
             {
@@ -951,9 +951,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_LEFT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_LEFT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(vol_flux_x[:_chunk.xwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+depth; k++) 
             {
@@ -969,9 +969,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_RIGHT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_RIGHT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(vol_flux_x[:_chunk.xwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+depth; k++) 
             {
@@ -990,9 +990,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_BOTTOM,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_BOTTOM,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(mass_flux_x[:_chunk.xwid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+1+depth; j++) 
             {
@@ -1008,9 +1008,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_TOP,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_TOP,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(mass_flux_x[:_chunk.xwid])
+#pragma acc loop independent collapse(2) 
 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+1+depth; j++) 
@@ -1027,9 +1027,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_LEFT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_LEFT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(mass_flux_x[:_chunk.xwid])
+#pragma acc loop independent collapse(2) 
 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+depth; k++) 
@@ -1046,9 +1046,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_RIGHT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_RIGHT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(mass_flux_x[:_chunk.xwid])
+#pragma acc loop independent collapse(2) 
 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+depth; k++) 
@@ -1068,9 +1068,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_BOTTOM,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_BOTTOM,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(vol_flux_y[:_chunk.ywid])
+#pragma acc loop independent collapse(2) 
 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+depth; j++) 
@@ -1087,9 +1087,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_TOP,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_TOP,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(vol_flux_y[:_chunk.ywid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+depth; j++) 
             {
@@ -1105,9 +1105,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_LEFT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_LEFT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(vol_flux_y[:_chunk.ywid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+1+depth; k++) 
             {
@@ -1123,9 +1123,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_RIGHT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_RIGHT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(vol_flux_y[:_chunk.ywid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+1+depth; k++) 
             {
@@ -1144,9 +1144,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_BOTTOM,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_BOTTOM,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(mass_flux_y[:_chunk.ywid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+depth; j++) 
             {
@@ -1162,9 +1162,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_TOP,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_TOP,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(mass_flux_y[:_chunk.ywid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int j = x_min-depth; j <= x_max+depth; j++) 
             {
@@ -1180,9 +1180,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_LEFT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_LEFT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(mass_flux_y[:_chunk.ywid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+1+depth; k++) 
             {
@@ -1198,9 +1198,9 @@ void update_halo_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         if(chunk_neighbours[FTNREF1D(CHUNK_RIGHT,1)] == EXTERNAL_FACE && 
                 tile_neighbours[FTNREF1D(TILE_RIGHT,1)] == EXTERNAL_TILE) 
         {
-#pragma acc kernels loop independent \
-            collapse(2) if(halo_offload) \
+#pragma acc parallel if(halo_offload) \
             present(mass_flux_y[:_chunk.ywid])
+#pragma acc loop independent collapse(2) 
 //#pragma omp parallel for 
             for (int k = y_min-depth; k <= y_max+1+depth; k++) 
             {

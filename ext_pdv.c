@@ -60,18 +60,16 @@ void pdv_kernel_c_(int *prdct,
 
     if(predict == 0) 
     {
-#pragma acc kernels loop independent \
-        collapse(2) if(offload) \
+#pragma acc kernels if(offload) \
         present(xarea[:_chunk.xwid], xvel0[:_chunk.bwid],\
                 yarea[:_chunk.ywid], yvel0[:_chunk.bwid],\
                 volume[:_chunk.wid], energy1[:_chunk.wid],\
                 energy0[:_chunk.wid], density1[:_chunk.wid],\
                 density0[:_chunk.wid], viscosity[:_chunk.wid],\
                 pressure[:_chunk.wid])
-//#pragma omp parallel for
+#pragma acc loop independent collapse(2)
         for (int k = y_min; k <= y_max; k++) 
         {
-//#pragma ivdep
             for (int j = x_min; j <= x_max; j++) 
             {
                 double left_flux =  
@@ -135,8 +133,7 @@ void pdv_kernel_c_(int *prdct,
     else
     {
 
-#pragma acc kernels loop independent \
-        collapse(2) if(offload) \
+#pragma acc kernels if(offload) \
         present(xarea[:_chunk.xwid], xvel0[:_chunk.bwid],\
                 yarea[:_chunk.ywid], yvel0[:_chunk.bwid],\
                 yvel1[:_chunk.bwid], xvel1[:_chunk.bwid],\
@@ -144,10 +141,9 @@ void pdv_kernel_c_(int *prdct,
                 energy0[:_chunk.wid], density1[:_chunk.wid],\
                 density0[:_chunk.wid], viscosity[:_chunk.wid],\
                 pressure[:_chunk.wid])
-        //#pragma omp parallel for
+#pragma acc loop independent collapse(2)
         for (int k = y_min; k <= y_max; k++) 
         {
-//#pragma ivdep
             for (int j = x_min; j <= x_max; j++) 
             {
                 double left_flux =  

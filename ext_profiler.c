@@ -16,12 +16,14 @@ profile _profiler_entries[_PROFILER_MAX_KERNELS];
 // Internally start the profiling timer
 void _profiler_start_timer()
 {
+#pragma acc wait
     _profiler_start = omp_get_wtime();
 }
 
 // Internally end the profiling timer and store results
 void _profiler_end_timer(const char* kernel_name)
 {
+#pragma acc wait
     _profiler_end = omp_get_wtime();
 
     // Check if an entry exists

@@ -47,10 +47,10 @@ void flux_calc_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
 
     START_PROFILING;
 
-#pragma acc kernels loop independent \
-    collapse(2) if(offload) \
+#pragma acc parallel if(offload) \
     present(vol_flux_x[:_chunk.xwid], xarea[:_chunk.xwid], \
             xvel0[:_chunk.bwid], xvel1[:_chunk.bwid])
+#pragma acc loop independent collapse(2)
 //#pragma omp parallel for
     for (int k = y_min; k <= y_max; k++) 
     {
@@ -66,10 +66,10 @@ void flux_calc_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         }
     }
 
-#pragma acc kernels loop independent \
-    collapse(2) if(offload) \
+#pragma acc parallel if(offload) \
     present(vol_flux_y[:_chunk.ywid], yarea[:_chunk.ywid], \
             yvel0[:_chunk.bwid], yvel1[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
     //#pragma omp parallel for
     for (int k = y_min; k <= y_max+1; k++) 
     {

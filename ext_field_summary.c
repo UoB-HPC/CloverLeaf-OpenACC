@@ -60,15 +60,14 @@ void field_summary_kernel_c_(int *xmin,
 
     START_PROFILING;
 
-#pragma acc kernels loop independent \
-    if(field_offload) collapse(2) \
+#pragma acc kernels if(field_offload) \
     present(xvel0[:_chunk.bwid], yvel0[:_chunk.bwid], volume[:_chunk.wid],\
-            density0[:_chunk.wid], pressure[:_chunk.wid], energy0[:_chunk.wid]) \
+            density0[:_chunk.wid], pressure[:_chunk.wid], energy0[:_chunk.wid]) 
+#pragma acc loop independent \
     reduction(+ : vol, mass, press, ie, ke)
-//#pragma omp parallel for
     for (int k = y_min; k <= y_max; k++) 
     {
-//#pragma ivdep
+#pragma acc loop independent
         for (int j = x_min;j <= x_max; j++) 
         {
             double vsqrd=0.0;

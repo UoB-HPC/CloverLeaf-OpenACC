@@ -84,11 +84,12 @@ void calc_dt_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
 
     START_PROFILING;
 
-#pragma acc kernels loop independent if(offload) collapse(2) \
+#pragma acc parallel if(offload) \
     present(celldx[:_chunk.xmax], celldy[:_chunk.ymax], soundspeed[:_chunk.wid], \
             viscosity[:_chunk.wid], density0[:_chunk.wid], xvel0[:_chunk.bwid], \
             xarea[:_chunk.xwid], volume[:_chunk.wid], yvel0[:_chunk.bwid], \
             yarea[:_chunk.ywid], dt_min[:_chunk.bwid])
+#pragma acc loop independent collapse(2) 
     for (int k = y_min; k <= y_max; k++)
     {
         for (int j = x_min; j <= x_max; j++)
@@ -141,9 +142,9 @@ void calc_dt_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         }
     }
 
-#pragma acc kernels loop independent \
-    collapse(2) reduction(min: dt_min_val) \
+#pragma acc parallel if(offload) reduction(min: dt_min_val) \
     present(dt_min[:_chunk.bwid])
+#pragma acc loop independent collapse(2)
     for (int k = y_min; k <= y_max; k++)
     {
         for (int j = x_min; j <= x_max; j++)

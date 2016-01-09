@@ -64,14 +64,13 @@ void advec_cell_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
     {
         if(sweep_number == 1)
         {
-#pragma acc kernels loop independent collapse(2) if(offload) \
+#pragma acc kernels if(offload) \
             present(pre_vol[:_chunk.bwid], post_vol[:_chunk.bwid], \
                     volume[:_chunk.wid], vol_flux_x[:_chunk.xwid], \
                     vol_flux_y[:_chunk.ywid])
-//#pragma omp parallel for 
+#pragma acc loop independent collapse(2)
             for (int k = y_min-2; k <= y_max+2; k++)
             {
-//#pragma ivdep
                 for (int j = x_min-2; j <= x_max+2; j++)
                 {
                     pre_vol[FTNREF2D(j  ,k  ,x_max+5,x_min-2,y_min-2)] =
@@ -90,14 +89,13 @@ void advec_cell_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         }
         else 
         {
-#pragma acc kernels loop independent collapse(2) if(offload) \
+#pragma acc kernels if(offload) \
             present(pre_vol[:_chunk.bwid], post_vol[:_chunk.bwid], \
                     volume[:_chunk.wid], vol_flux_x[:_chunk.xwid], \
                     vol_flux_y[:_chunk.ywid])
-//#pragma omp parallel for
+#pragma acc loop independent collapse(2)
             for (int k = y_min-2; k <= y_max+2; k++) 
             {
-//#pragma ivdep
                 for (int j = x_min-2; j <= x_max+2; j++) 
                 {
                     pre_vol[FTNREF2D(j  ,k  ,x_max+5,x_min-2,y_min-2)] =
@@ -109,13 +107,13 @@ void advec_cell_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
                 }
             }
         }
-#pragma acc kernels loop independent collapse(2) if(offload) \
+#pragma acc kernels if(offload) \
             present(pre_vol[:_chunk.bwid], post_vol[:_chunk.bwid], \
                     volume[:_chunk.wid], vol_flux_x[:_chunk.xwid], \
                     vol_flux_y[:_chunk.ywid], vertexdx[:_chunk.xmax+1], \
                     density1[:_chunk.wid], mass_flux_x[:_chunk.xwid], \
                     energy1[:_chunk.wid], ener_flux[:_chunk.bwid])
-//#pragma omp parallel for 
+#pragma acc loop independent collapse(2)
         for (int k = y_min; k <= y_max; k++)
         {
             for (int j = x_min; j <= x_max+2; j++)
@@ -166,14 +164,13 @@ void advec_cell_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
             }
         }
 
-#pragma acc kernels loop independent collapse(2) if(offload) \
+#pragma acc kernels if(offload) \
             present(pre_vol[:_chunk.bwid], vol_flux_x[:_chunk.xwid], \
                     density1[:_chunk.wid], mass_flux_x[:_chunk.xwid], \
                     energy1[:_chunk.wid], ener_flux[:_chunk.bwid])
-//#pragma omp parallel for
+#pragma acc loop independent collapse(2)
         for (int k = y_min; k <= y_max; k++)
         {
-//#pragma ivdep
             for (int j = x_min; j <= x_max; j++)
             {
                 double pre_mass_s =
@@ -200,14 +197,13 @@ void advec_cell_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
     {
         if(sweep_number == 1)
         {
-#pragma acc kernels loop independent collapse(2) if(offload) \
+#pragma acc kernels if(offload) \
             present(pre_vol[:_chunk.bwid], post_vol[:_chunk.bwid], \
                     volume[:_chunk.wid], vol_flux_x[:_chunk.xwid], \
                     vol_flux_y[:_chunk.ywid])
-//#pragma omp parallel for
+#pragma acc loop independent collapse(2)
             for (int k = y_min-2; k <= y_max+2; k++)
             {
-//#pragma ivdep
                 for (int j = x_min-2; j <= x_max+2; j++)
                 {
                     pre_vol[FTNREF2D(j  ,k  ,x_max+5,x_min-2,y_min-2)] =
@@ -225,14 +221,13 @@ void advec_cell_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
         }
         else 
         {
-#pragma acc kernels loop independent collapse(2) if(offload) \
+#pragma acc kernels if(offload) \
             present(pre_vol[:_chunk.bwid], post_vol[:_chunk.bwid], \
                     volume[:_chunk.wid], vol_flux_x[:_chunk.xwid], \
                     vol_flux_y[:_chunk.ywid])
-//#pragma omp parallel for 
+#pragma acc loop independent collapse(2)
             for (int k = y_min-2; k <= y_max+2; k++)
             {
-//#pragma ivdep
                 for (int j = x_min-2; j <= x_max+2; j++)
                 {
                     pre_vol[FTNREF2D(j  ,k  ,x_max+5,x_min-2,y_min-2)] =
@@ -245,13 +240,13 @@ void advec_cell_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
             }
         }
 
-#pragma acc kernels loop independent collapse(2) if(offload) \
+#pragma acc kernels if(offload) \
             present(pre_vol[:_chunk.bwid], post_vol[:_chunk.bwid], \
                     volume[:_chunk.wid], vol_flux_x[:_chunk.xwid], \
                     vol_flux_y[:_chunk.ywid], vertexdy[:_chunk.xmax+5], \
                     density1[:_chunk.wid], mass_flux_y[:_chunk.xwid], \
                     energy1[:_chunk.wid], ener_flux[:_chunk.bwid])
-//#pragma omp parallel for
+#pragma acc loop independent collapse(2)
         for (int k = y_min; k <= y_max+2; k++)
         {
             for (int j = x_min; j <= x_max; j++)
@@ -302,16 +297,15 @@ void advec_cell_kernel_c_(int *xmin,int *xmax,int *ymin,int *ymax,
             }
         }
 
-#pragma acc kernels loop independent collapse(2) if(offload) \
+#pragma acc kernels if(offload) \
             present(pre_vol[:_chunk.bwid], post_vol[:_chunk.bwid], \
                     volume[:_chunk.wid], vol_flux_x[:_chunk.xwid], \
                     vol_flux_y[:_chunk.ywid], vertexdx[:_chunk.xmax+5], \
                     density1[:_chunk.wid], mass_flux_y[:_chunk.xwid], \
                     energy1[:_chunk.wid], ener_flux[:_chunk.bwid])
-//#pragma omp parallel for
+#pragma acc loop independent collapse(2)
         for (int k = y_min; k <= y_max; k++)
         {
-//#pragma ivdep
             for (int j = x_min; j <= x_max; j++)
             {
                 double pre_mass_s =
