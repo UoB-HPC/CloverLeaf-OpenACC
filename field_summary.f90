@@ -24,7 +24,7 @@
 !>  Note the reference solution is the value returned from an Intel compiler with
 !>  ieee options set on a single core crun.
 
-SUBROUTINE field_summary(offload)
+SUBROUTINE field_summary()
 
   USE clover_module
   USE ideal_gas_module
@@ -38,7 +38,7 @@ SUBROUTINE field_summary(offload)
 
   !$ INTEGER :: OMP_GET_THREAD_NUM
 
-  INTEGER      :: tile, offload
+  INTEGER      :: tile
 
   REAL(KIND=8) :: kernel_time,timer
 
@@ -51,7 +51,7 @@ SUBROUTINE field_summary(offload)
 
   IF(profiler_on) kernel_time=timer()
   DO tile=1,tiles_per_chunk
-    CALL ideal_gas(tile,.FALSE.,offload)
+    CALL ideal_gas(tile,.FALSE.)
   ENDDO
 
   IF(profiler_on) profiler%ideal_gas=profiler%ideal_gas+(timer()-kernel_time)
@@ -65,7 +65,6 @@ SUBROUTINE field_summary(offload)
   t_press=0.0
 
 
-  IF(use_fortran_kernels) THEN
     DO tile=1,tiles_per_chunk
       CALL field_summary_kernel(chunk%tiles(tile)%t_xmin,                   &
         chunk%tiles(tile)%t_xmax,                   &
@@ -86,28 +85,6 @@ SUBROUTINE field_summary(offload)
 
     ENDDO
 
-  ELSEIF(use_C_kernels) THEN
-    DO tile=1,tiles_per_chunk
-      CALL field_summary_kernel_c(chunk%tiles(tile)%t_xmin,                   &
-        chunk%tiles(tile)%t_xmax,                   &
-        chunk%tiles(tile)%t_ymin,                   &
-        chunk%tiles(tile)%t_ymax,                   &
-        chunk%tiles(tile)%field%volume,                  &
-        chunk%tiles(tile)%field%density0,                &
-        chunk%tiles(tile)%field%energy0,                 &
-        chunk%tiles(tile)%field%pressure,                &
-        chunk%tiles(tile)%field%xvel0,                   &
-        chunk%tiles(tile)%field%yvel0,                   &
-        vol,mass,ie,ke,press,offload)
-      t_vol=t_vol+vol
-      t_mass=t_mass+mass
-      t_ie=t_ie+ie
-      t_ke=t_ke+ke
-      t_press=t_press+press
-      
-    ENDDO
-
-  ENDIF
     
   vol=t_vol
   ie=t_ie
@@ -115,14 +92,13 @@ SUBROUTINE field_summary(offload)
   mass=t_mass
   press=t_press
 
+
   ! For mpi I need a reduction here
   CALL clover_sum(vol)
   CALL clover_sum(mass)
   CALL clover_sum(press)
   CALL clover_sum(ie)
   CALL clover_sum(ke)
-
-
   IF(profiler_on) profiler%summary=profiler%summary+(timer()-kernel_time)
 
   IF(parallel%boss) THEN
@@ -155,5 +131,6 @@ SUBROUTINE field_summary(offload)
     !$    ENDIF
     ENDIF
   ENDIF
+
 
 END SUBROUTINE field_summary

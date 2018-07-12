@@ -71,8 +71,6 @@ PROGRAM clover_leaf
 
   CALL hydro
   
-  CALL ext_finalise
-
   ! Deallocate everything
   
 END PROGRAM clover_leaf

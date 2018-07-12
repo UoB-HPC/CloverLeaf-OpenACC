@@ -128,7 +128,6 @@ MODULE definitions_module
     REAL(KIND=8),    DIMENSION(:,:), ALLOCATABLE :: pressure
     REAL(KIND=8),    DIMENSION(:,:), ALLOCATABLE :: viscosity
     REAL(KIND=8),    DIMENSION(:,:), ALLOCATABLE :: soundspeed
-    REAL(KIND=8),    DIMENSION(:,:), ALLOCATABLE :: min_vals
     REAL(KIND=8),    DIMENSION(:,:), ALLOCATABLE :: xvel0,xvel1
     REAL(KIND=8),    DIMENSION(:,:), ALLOCATABLE :: yvel0,yvel1
     REAL(KIND=8),    DIMENSION(:,:), ALLOCATABLE :: vol_flux_x,mass_flux_x
@@ -200,6 +199,11 @@ MODULE definitions_module
       ,bottom_boundary &
       ,top_boundary
   END TYPE chunk_type
+
+
+
+
+
 
   TYPE(chunk_type)       :: chunk
   INTEGER                :: number_of_chunks

@@ -56,25 +56,10 @@
 #        make clean               # Will clean up the directory
 #        make DEBUG=1             # Will select debug options. If a compiler is selected, it will use compiler specific debug options
 #        make IEEE=1              # Will select debug options as long as a compiler is selected as well
-# e.g. make COMPILER=INTEL MPI_F90=mpiifort MPI_C=mpiicc DEBUG=1 IEEE=1 # will compile with the intel compiler with intel debug and ieee flags included
+# e.g. make COMPILER=INTEL MPI_COMPILER=mpiifort C_MPI_COMPILER=mpiicc DEBUG=1 IEEE=1 # will compile with the intel compiler with intel debug and ieee flags included
 
-COMPILER	= CRAY
-MODE	 	= offload
-MPI_F90		= ftn
-MPI_C		= cc
-CPROFILER   = yes
-
-ifeq ($(MODE), native)
-   MIC = -mmic
-endif
-ifeq ($(MODE), offload)
-   MIC = -DOFFLOAD
-endif
-ifeq ($(MODE), none)
-   MIC = 
-endif
-ifeq ($(CPROFILER), yes)
-   OPTIONS += -DENABLE_PROFILING
+ifndef COMPILER
+  MESSAGE=select a compiler to compile in OpenMP, e.g. make COMPILER=INTEL
 endif
 
 OMP_INTEL     = -openmp
@@ -90,14 +75,14 @@ FLAGS_INTEL     = -O3 -no-prec-div
 FLAGS_SUN       = -fast -xipo=2 -Xlistv4
 FLAGS_GNU       = -O3 -march=native -funroll-loops
 FLAGS_CRAY      = -em -ra -h acc_model=fast_addr:no_deep_copy:auto_async_all
-FLAGS_PGI       = -fastsse -Mipa=fast -Mlist
+FLAGS_PGI       = -Mpreprocess -fast -acc -Minfo=acc -ta=tesla,cc60 
 FLAGS_PATHSCALE = -O3
 FLAGS_XL        = -O5 -qipa=partition=large -g -qfullpath -Q -qsigtrap -qextname=flush:ideal_gas_kernel_c:viscosity_kernel_c:pdv_kernel_c:revert_kernel_c:accelerate_kernel_c:flux_calc_kernel_c:advec_cell_kernel_c:advec_mom_kernel_c:reset_field_kernel_c:timer_c:unpack_top_bottom_buffers_c:pack_top_bottom_buffers_c:unpack_left_right_buffers_c:pack_left_right_buffers_c:field_summary_kernel_c:update_halo_kernel_c:generate_chunk_kernel_c:initialise_chunk_kernel_c:calc_dt_kernel_c:clover_unpack_message_bottom_c:clover_pack_message_bottom_c:clover_unpack_message_top_c:clover_pack_message_top_c:clover_unpack_message_right_c:clover_pack_message_right_c:clover_unpack_message_left_c:clover_pack_message_left_c -qlistopt -qattr=full -qlist -qreport -qxref=full -qsource -qsuppress=1506-224:1500-036FLAGS_          = -O3
-CFLAGS_INTEL     = -O3 -no-prec-div -restrict -fno-alias -std=c99
+CFLAGS_INTEL     = -O3 -no-prec-div -restrict -fno-alias
 CFLAGS_SUN       = -fast -xipo=2
 CFLAGS_GNU       = -O3 -march=native -funroll-loops
 CFLAGS_CRAY      = -em -h list=a
-CFLAGS_PGI       = -fastsse -Mipa=fast -Mlist
+CFLAGS_PGI       = -fast
 CFLAGS_PATHSCALE = -O3
 CFLAGS_XL       = -O5 -qipa=partition=large -g -qfullpath -Q -qlistopt -qattr=full -qlist -qreport -qxref=full -qsource -qsuppress=1506-224:1500-036 -qsrcmsg
 CFLAGS_          = -O3
@@ -131,26 +116,66 @@ ifdef IEEE
   I3E=$(I3E_$(COMPILER))
 endif
 
-FLAGS=$(FLAGS_$(COMPILER)) $(OMP) $(I3E) $(OPTIONS) $(MIC)
-CFLAGS=$(CFLAGS_$(COMPILER)) $(OMP) $(I3E) $(OPTIONS) $(MIC) -c
+FLAGS=$(FLAGS_$(COMPILER)) $(OMP) $(I3E) $(OPTIONS)
+CFLAGS=$(CFLAGS_$(COMPILER)) $(OMP) $(I3E) $(C_OPTIONS) -c
+MPI_COMPILER=mpif90
+C_MPI_COMPILER=mpicc
 
-OBJ	= $(patsubst %.c,%.o, $(wildcard *.c))
-OBJ	+= $(patsubst %.f90,%.o, $(wildcard *.f90))
+clover_leaf: c_lover *.f90 Makefile
+	$(MPI_COMPILER) $(FLAGS)	\
+	data.f90			\
+	definitions.f90			\
+	pack_kernel.f90			\
+	clover.f90			\
+	report.f90			\
+	timer.f90			\
+	parse.f90			\
+	read_input.f90			\
+	initialise_chunk_kernel.f90	\
+	initialise_chunk.f90		\
+	build_field.f90			\
+	update_tile_halo_kernel.f90	\
+	update_tile_halo.f90		\
+	update_halo_kernel.f90		\
+	update_halo.f90			\
+	ideal_gas_kernel.f90		\
+	ideal_gas.f90			\
+	start.f90			\
+	generate_chunk_kernel.f90	\
+	generate_chunk.f90		\
+	initialise.f90			\
+	field_summary_kernel.f90	\
+	field_summary.f90		\
+	viscosity_kernel.f90		\
+	viscosity.f90			\
+	calc_dt_kernel.f90		\
+	calc_dt.f90			\
+	timestep.f90			\
+	accelerate_kernel.f90		\
+	accelerate.f90			\
+	revert_kernel.f90		\
+	revert.f90			\
+	PdV_kernel.f90			\
+	PdV.f90				\
+	flux_calc_kernel.f90		\
+	flux_calc.f90			\
+	advec_cell_kernel.f90		\
+	advec_cell_driver.f90		\
+	advec_mom_kernel.f90		\
+	advec_mom_driver.f90		\
+	advection.f90			\
+	reset_field_kernel.f90		\
+	reset_field.f90			\
+	hydro.f90			\
+	visit.f90			\
+	clover_leaf.f90     \
+	timer_c.o             \
+	-o clover_leaf; echo $(MESSAGE)
 
-clover_leaf: Makefile $(OBJ)
-	$(MPI_F90) $(FLAGS)	$(OBJ) $(LDLIBS) -o clover_leaf
-	@echo $(MESSAGE)
+c_lover: *.c Makefile
+	$(C_MPI_COMPILER) $(CFLAGS)	\
+	timer_c.c
 
-include make.deps
-
-%_module.mod: %.f90 %.o
-	@true
-%.o: %.f90 Makefile make.deps
-	$(MPI_F90) $(FLAGS) -c $<
-%.o: %.c Makefile make.deps
-	$(MPI_C) $(CFLAGS) -c $<
-
-.PHONY: clean
 
 clean:
 	rm -f *.o *.mod *genmod* *cuda* *hmd* *.cu *.oo *.hmf *.lst *.cub *.ptx *.cl clover_leaf

@@ -58,7 +58,7 @@ CONTAINS
 
     IF(profiler_on) kernel_time=timer()
     DO tile = 1, tiles_per_chunk
-      CALL ideal_gas(tile,.FALSE.,1)
+      CALL ideal_gas(tile,.FALSE.)
     END DO
 
     IF(profiler_on) profiler%ideal_gas=profiler%ideal_gas+(timer()-kernel_time)
@@ -69,7 +69,7 @@ CONTAINS
     fields(FIELD_DENSITY0)=1
     fields(FIELD_XVEL0)=1
     fields(FIELD_YVEL0)=1
-    CALL update_halo(fields,1,1)
+    CALL update_halo(fields,1)
 
     IF(profiler_on) kernel_time=timer()
     CALL viscosity()
@@ -77,7 +77,7 @@ CONTAINS
 
     fields=0
     fields(FIELD_VISCOSITY)=1
-    CALL update_halo(fields,1,1)
+    CALL update_halo(fields,1)
 
     IF(profiler_on) kernel_time=timer()
 

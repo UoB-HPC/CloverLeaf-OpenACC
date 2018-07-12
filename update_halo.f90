@@ -24,7 +24,7 @@ MODULE update_halo_module
 
 CONTAINS
 
-  SUBROUTINE update_halo(fields,depth,offload)
+  SUBROUTINE update_halo(fields,depth)
 
     USE clover_module
     USE update_tile_halo_module
@@ -32,15 +32,15 @@ CONTAINS
 
     IMPLICIT NONE
 
-    INTEGER :: tile,fields(NUM_FIELDS),depth, offload
+    INTEGER :: tile,fields(NUM_FIELDS),depth
     REAL(KIND=8) :: kernel_time,timer
 
-    ! TODO: fix the chunk comms phase
-    !IF(profiler_on) kernel_time=timer()
-    !CALL update_tile_halo(fields,depth)
-    !IF(profiler_on) profiler%tile_halo_exchange=profiler%tile_halo_exchange+(timer()-kernel_time)
+      !TODO: fix the chunk comms phase
     IF(profiler_on) kernel_time=timer()
-    CALL clover_exchange(fields,depth,offload)
+    CALL update_tile_halo(fields,depth)
+    IF(profiler_on) profiler%tile_halo_exchange=profiler%tile_halo_exchange+(timer()-kernel_time)
+    IF(profiler_on) kernel_time=timer()
+    CALL clover_exchange(fields,depth)
     IF(profiler_on) profiler%mpi_halo_exchange=profiler%mpi_halo_exchange+(timer()-kernel_time)
  
     IF(profiler_on) kernel_time=timer()
@@ -49,8 +49,6 @@ CONTAINS
       (chunk%chunk_neighbours(CHUNK_BOTTOM) .EQ. EXTERNAL_FACE) .OR.   &
       (chunk%chunk_neighbours(CHUNK_TOP) .EQ. EXTERNAL_FACE) ) THEN
 
-
-      IF(use_fortran_kernels) THEN
         DO tile=1,tiles_per_chunk
 
           CALL update_halo_kernel(chunk%tiles(tile)%t_xmin,          &
@@ -80,37 +78,7 @@ CONTAINS
 
         ENDDO
 
-      ELSEIF(use_C_kernels) THEN
-        DO tile=1,tiles_per_chunk
 
-          CALL update_halo_kernel_c(chunk%tiles(tile)%t_xmin,          &
-            chunk%tiles(tile)%t_xmax,          &
-            chunk%tiles(tile)%t_ymin,          &
-            chunk%tiles(tile)%t_ymax,          &
-            chunk%chunk_neighbours,     &
-            chunk%tiles(tile)%tile_neighbours,     &
-            chunk%tiles(tile)%field%density0,       &
-            chunk%tiles(tile)%field%energy0,        &
-            chunk%tiles(tile)%field%pressure,       &
-            chunk%tiles(tile)%field%viscosity,      &
-            chunk%tiles(tile)%field%soundspeed,     &
-            chunk%tiles(tile)%field%density1,       &
-            chunk%tiles(tile)%field%energy1,        &
-            chunk%tiles(tile)%field%xvel0,          &
-            chunk%tiles(tile)%field%yvel0,          &
-            chunk%tiles(tile)%field%xvel1,          &
-            chunk%tiles(tile)%field%yvel1,          &
-            chunk%tiles(tile)%field%vol_flux_x,     &
-            chunk%tiles(tile)%field%vol_flux_y,     &
-            chunk%tiles(tile)%field%mass_flux_x,    &
-            chunk%tiles(tile)%field%mass_flux_y,    &
-            fields,                         &
-            depth                          ,&
-            offload)
-
-
-        ENDDO
-      ENDIF
     ENDIF
 
     IF(profiler_on) profiler%self_halo_exchange=profiler%self_halo_exchange+(timer()-kernel_time)

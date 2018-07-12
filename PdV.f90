@@ -52,8 +52,6 @@ CONTAINS
     ELSE
       prdct=1
     ENDIF
-  
-    IF(use_fortran_kernels) THEN
 
       DO tile=1,tiles_per_chunk
 
@@ -82,34 +80,7 @@ CONTAINS
 
       ENDDO
   
-    ELSEIF(use_C_kernels) THEN
-      DO tile=1,tiles_per_chunk
 
-
-        CALL PdV_kernel_c(prdct,                  &
-          chunk%tiles(tile)%t_xmin,      &
-          chunk%tiles(tile)%t_xmax,      &
-          chunk%tiles(tile)%t_ymin,      &
-          chunk%tiles(tile)%t_ymax,      &
-          dt,                         &
-          chunk%tiles(tile)%field%xarea,      &
-          chunk%tiles(tile)%field%yarea,      &
-          chunk%tiles(tile)%field%volume ,    &
-          chunk%tiles(tile)%field%density0,   &
-          chunk%tiles(tile)%field%density1,   &
-          chunk%tiles(tile)%field%energy0,    &
-          chunk%tiles(tile)%field%energy1,    &
-          chunk%tiles(tile)%field%pressure,   &
-          chunk%tiles(tile)%field%viscosity,  &
-          chunk%tiles(tile)%field%xvel0,      &
-          chunk%tiles(tile)%field%xvel1,      &
-          chunk%tiles(tile)%field%yvel0,      &
-          chunk%tiles(tile)%field%yvel1,      &
-          chunk%tiles(tile)%field%work_array1 )
-      
-
-      ENDDO
-    ENDIF
     
 
     CALL clover_check_error(error_condition)
@@ -122,13 +93,13 @@ CONTAINS
     IF(predict)THEN
       IF(profiler_on) kernel_time=timer()
       DO tile=1,tiles_per_chunk
-        CALL ideal_gas(tile,.TRUE.,1)
+        CALL ideal_gas(tile,.TRUE.)
       ENDDO
 
       IF(profiler_on) profiler%ideal_gas=profiler%ideal_gas+(timer()-kernel_time)
       fields=0
       fields(FIELD_PRESSURE)=1
-      CALL update_halo(fields,1,1)
+      CALL update_halo(fields,1)
     ENDIF
 
     IF ( predict ) THEN

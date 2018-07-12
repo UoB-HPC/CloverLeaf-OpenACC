@@ -51,7 +51,7 @@ CONTAINS
     fields(FIELD_DENSITY1)=1
     fields(FIELD_VOL_FLUX_X)=1
     fields(FIELD_VOL_FLUX_Y)=1
-    CALL update_halo(fields,2,1)
+    CALL update_halo(fields,2)
 
     IF(profiler_on) kernel_time=timer()
     DO tile=1,tiles_per_chunk
@@ -67,7 +67,7 @@ CONTAINS
     fields(FIELD_YVEL1)=1
     fields(FIELD_MASS_FLUX_X)=1
     fields(FIELD_MASS_FLUX_y)=1
-    CALL update_halo(fields,2,1)
+    CALL update_halo(fields,2)
 
     IF(profiler_on) kernel_time=timer()
   
@@ -98,7 +98,7 @@ CONTAINS
     fields(FIELD_YVEL1)=1
     fields(FIELD_MASS_FLUX_X)=1
     fields(FIELD_MASS_FLUX_y)=1
-    CALL update_halo(fields,2,1)
+    CALL update_halo(fields,2)
 
     IF(profiler_on) kernel_time=timer()
 

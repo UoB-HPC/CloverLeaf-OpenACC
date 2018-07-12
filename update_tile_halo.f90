@@ -42,8 +42,6 @@ CONTAINS
     ! Update Top Bottom - Real to Real
 
 
-    WRITE(0,*) "TILING"
-
     DO tile=1,tiles_per_chunk
       t_up   =chunk%tiles(tile)%tile_neighbours(TILE_TOP)
       t_down =chunk%tiles(tile)%tile_neighbours(TILE_BOTTOM)

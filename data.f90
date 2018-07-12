@@ -85,7 +85,6 @@ MODULE data_module
   INTEGER         ::            g_in           & ! File for input data.
     ,g_out
 
-    LOGICAL :: g_offload
 
   TYPE parallel_type
     LOGICAL           ::      parallel &
